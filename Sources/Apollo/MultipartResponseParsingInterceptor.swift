@@ -2,6 +2,9 @@ import Foundation
 #if !COCOAPODS
 import ApolloAPI
 #endif
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// Parses multipart response data into chunks and forwards each on to the next interceptor.
 public struct MultipartResponseParsingInterceptor: ApolloInterceptor {

@@ -2,6 +2,9 @@ import Foundation
 #if !COCOAPODS
 import ApolloAPI
 #endif
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 /// A network transport is responsible for sending GraphQL operations to a server.
 public protocol NetworkTransport: AnyObject {
