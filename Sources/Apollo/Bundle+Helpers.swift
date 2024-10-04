@@ -1,5 +1,10 @@
 import Foundation
 
+#if os(Linux)
+let kCFBundleIdentifierKey = "CFBundleIdentifier"
+let kCFBundleVersionKey = "CFBundleVersion"
+#endif
+
 extension Bundle {
 
   /// Type-safe getter for info dictionary key objects
