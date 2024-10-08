@@ -13,6 +13,14 @@ public final class JSONSerializationFormat {
   }
 
   public class func deserialize(data: Data) throws -> JSONValue {
-    return try JSONSerialization.jsonObject(with: data, options: []) as! AnyHashable
+#if canImport(FoundationNetworking) // there is probably a better macro to determine we're running on linux
+      let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+      // Don't cast directly to AnyHashable when running on linux to avoid running into crasher.
+      // rdar://137300308 (Runtime crash on linux when force casting to AnyHashable (doesn't repro when running on macOS))
+      let intermediaryCast = jsonObject as! Dictionary<String, AnyHashable>
+      return intermediaryCast as AnyHashable
+#else
+      return try JSONSerialization.jsonObject(with: data, options: []) as! AnyHashable
+#endif
   }
 }
